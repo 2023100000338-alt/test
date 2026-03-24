@@ -1,46 +1,63 @@
 let subjectCount = 0;
 
+// Predefined Demo Subjects for Professional Look
+const courseSuggestions = [
+    "Introduction to Programming",
+    "Data Structures",
+    "Discrete Mathematics",
+    "Business Communication",
+    "Microeconomics",
+    "Physics I",
+    "English Composition"
+];
+
 function addSubject() {
     subjectCount++;
-
     const row = document.createElement("tr");
+    
+    // Generate Course Options
+    const courseOptions = courseSuggestions.map(course => `<option value="${course}">${course}</option>`).join('');
 
     row.innerHTML = `
-        <td>Subject ${subjectCount}</td>
-
         <td>
-            <select class="credit">
-                <option value="">Select</option>
+            <select class="course-name">
+                <option value="">-- Choose Course --</option>
+                ${courseOptions}
+                <option value="Custom">Other (Custom)</option>
+            </select>
+        </td>
+        <td>
+            <select class="credit" onchange="calculateCGPA()">
                 <option value="1">1</option>
-                <option value="3">3</option>
+                
+                <option value="3" selected>3</option>
+        
             </select>
         </td>
-
         <td>
-            <select class="grade">
-                <option value="">Select</option>
-                <option value="2.00">2.00</option>
-                <option value="2.25">2.25</option>
-                <option value="2.50">2.50</option>
-                <option value="2.75">2.75</option>
-                <option value="3.00">3.00</option>
-                <option value="3.25">3.25</option>
-                <option value="3.50">3.50</option>
-                <option value="3.75">3.75</option>
-                <option value="4.00">4.00</option>
+            <select class="grade" onchange="calculateCGPA()">
+                <option value="4.00">A+ (4.00)</option>
+                <option value="3.75">A (3.75)</option>
+                <option value="3.50">A- (3.50)</option>
+                <option value="3.25">B+ (3.25)</option>
+                <option value="3.00">B (3.00)</option>
+                <option value="2.75">B- (2.75)</option>
+                <option value="2.50">C+ (2.50)</option>
+                <option value="2.25">C (2.25)</option>
+                <option value="2.00">D (2.00)</option>
             </select>
         </td>
-
         <td>
-            <button onclick="removeSubject(this)">❌</button>
+            <button class="btn-delete" onclick="removeSubject(this)">Remove</button>
         </td>
     `;
-
     document.getElementById("subjectTable").appendChild(row);
+    calculateCGPA(); // Initial update
 }
 
 function removeSubject(btn) {
-    btn.parentElement.parentElement.remove();
+    btn.closest('tr').remove();
+    calculateCGPA();
 }
 
 function calculateCGPA() {
@@ -50,21 +67,36 @@ function calculateCGPA() {
     let totalCredits = 0;
     let weightedSum = 0;
 
-    for (let i = 0; i < credits.length; i++) {
-        const credit = parseFloat(credits[i].value);
-        const grade = parseFloat(grades[i].value);
+    credits.forEach((c, i) => {
+        const creditValue = parseFloat(c.value);
+        const gradeValue = parseFloat(grades[i].value);
+        totalCredits += creditValue;
+        weightedSum += (creditValue * gradeValue);
+    });
 
-        if (isNaN(credit) || isNaN(grade)) {
-            alert("Please select credit and grade for all subjects");
-            return;
-        }
-
-        totalCredits += credit;
-        weightedSum += credit * grade;
+    // Update Dashboard Numbers
+    document.getElementById("stat-credits").innerText = totalCredits.toFixed(1);
+    
+    if (totalCredits === 0) {
+        document.getElementById("stat-cgpa").innerText = "0.00";
+        document.getElementById("result-box").style.display = "none";
+        return;
     }
 
     const cgpa = (weightedSum / totalCredits).toFixed(2);
+    document.getElementById("stat-cgpa").innerText = cgpa;
 
-    document.getElementById("result").innerText =
-        `Your CGPA is: ${cgpa}`;
+    // Progress Bar Animation
+    const resultBox = document.getElementById("result-box");
+    const progressBar = document.getElementById("progress-bar");
+    resultBox.style.display = "block";
+    
+    // Scale: 4.0 = 100%, 2.0 = 0% (roughly)
+    const percentage = ((cgpa - 2) / 2) * 100;
+    progressBar.style.width = Math.max(10, percentage) + "%";
+    
+    document.getElementById("result-text").innerHTML = `Calculated CGPA: <strong>${cgpa}</strong>`;
 }
+
+// Start with 1 row on load
+window.onload = addSubject;

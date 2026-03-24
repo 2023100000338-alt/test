@@ -1,23 +1,120 @@
+/* 1. Global Variables & Modern Reset */
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --success: #10b981;
+    --bg-main: #f1f5f9;
+    --bg-card: #ffffff;
+    --header-bg: #0f172a;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --radius: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Clean touch for mobile */
+}
+
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #f4f6f9;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     margin: 0;
+    line-height: 1.6;
 }
 
+/* 2. Header Design */
 header {
-    background: #0f172a;
+    background: var(--header-bg);
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: white;
-    padding: 15px;
+    padding: 3rem 1rem;
     text-align: center;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
 }
 
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+}
+
+header p {
+    margin: 8px 0 0;
+    opacity: 0.7;
+    font-size: 1rem;
+}
+
+/* 3. Responsive Layout System */
 .container {
-    max-width: 800px;
-    margin: 40px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto 50px auto;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px; /* Sidebar fixed width on desktop */
+    gap: 2rem;
+    align-items: start;
+}
+
+.calculator-section {
+    width: 100%;
+}
+
+/* 4. Dashboard Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card .label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.stat-card .value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+/* 5. Modern Table UI */
+.table-wrapper {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden; /* Clips the table corners to the radius */
+    margin-bottom: 1.5rem;
 }
 
 table {
@@ -25,39 +122,189 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
-}
-
 th {
-    background: #f1f5f9;
+    background: #f8fafc;
+    padding: 16px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
 }
 
-select {
-    width: 90%;
-    padding: 6px;
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Form Controls */
+select, input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: #ffffff;
+    transition: all 0.2s;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* 6. Professional Sidebar (Grade Legend) */
+.grade-legend {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 20px;
+}
+
+.grade-legend h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--header-bg);
+}
+
+.legend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+/* 7. Action Buttons */
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 button {
-    margin-top: 15px;
-    padding: 10px 15px;
-    border: none;
+    flex: 1;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+    border: none;
 }
 
-button.primary {
-    background: #2563eb;
+.btn-primary {
+    background: var(--primary);
     color: white;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+    background: #ffffff;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
 }
 
 button:hover {
-    opacity: 0.9;
+    transform: translateY(-1px);
+    filter: brightness(110%);
 }
 
-.result {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
+button:active {
+    transform: translateY(0);
+}
+
+.btn-delete {
+    background: transparent;
+    color: #ef4444;
+    padding: 8px;
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    background: #fef2f2;
+}
+
+/* 8. Result Section */
+.result-container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.progress-bg {
+    background: #e2e8f0;
+    height: 14px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
+    height: 100%;
+    width: 0%;
+    transition: width 0.8s ease-out;
+}
+
+/* 9. Advanced Media Queries (Responsive) */
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+    .container { width: 1100px; }
+}
+
+/* Tablet & Mobile Breakpoint */
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr; /* Stack into one column */
+    }
+
+    .grade-legend {
+        position: static;
+        order: 2; /* Move legend below calculator on mobile */
+    }
+
+    header {
+        padding: 2rem 1rem;
+    }
+}
+
+/* Phone Portrait Breakpoint */
+@media (max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: 1fr; /* One stat card per row */
+    }
+
+    .controls {
+        flex-direction: column; /* Buttons stack on top of each other */
+    }
+
+    th:nth-child(1), td:nth-child(1) { width: 40%; } /* Subject column wider */
+
+    table {
+        min-width: 450px; /* Slight scroll is better than squishing text */
+    }
+
+    .stat-card .value {
+        font-size: 1.5rem;
+    }
 }
