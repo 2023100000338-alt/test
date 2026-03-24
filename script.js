@@ -1,6 +1,5 @@
 let subjectCount = 0;
 
-// Predefined Demo Subjects for Professional Look
 const courseSuggestions = [
     "Introduction to Programming",
     "Data Structures",
@@ -15,9 +14,9 @@ function addSubject() {
     subjectCount++;
     const row = document.createElement("tr");
     
-    // Generate Course Options
     const courseOptions = courseSuggestions.map(course => `<option value="${course}">${course}</option>`).join('');
 
+    // REMOVED: onchange="calculateCGPA()" from the select tags
     row.innerHTML = `
         <td>
             <select class="course-name">
@@ -27,15 +26,16 @@ function addSubject() {
             </select>
         </td>
         <td>
-            <select class="credit" onchange="calculateCGPA()">
+            <select class="credit">
                 <option value="1">1</option>
-                
+                <option value="1.5">1.5</option>
+                <option value="2" selected>2</option>
                 <option value="3" selected>3</option>
-        
+                <option value="4">4</option>
             </select>
         </td>
         <td>
-            <select class="grade" onchange="calculateCGPA()">
+            <select class="grade">
                 <option value="4.00">A+ (4.00)</option>
                 <option value="3.75">A (3.75)</option>
                 <option value="3.50">A- (3.50)</option>
@@ -52,12 +52,14 @@ function addSubject() {
         </td>
     `;
     document.getElementById("subjectTable").appendChild(row);
-    calculateCGPA(); // Initial update
 }
 
 function removeSubject(btn) {
     btn.closest('tr').remove();
-    calculateCGPA();
+    // Optional: If you want the top stats to hide when everything is deleted
+    if (document.querySelectorAll("tr.subject-row").length === 0) {
+        document.getElementById("result-box").style.display = "none";
+    }
 }
 
 function calculateCGPA() {
@@ -66,6 +68,11 @@ function calculateCGPA() {
 
     let totalCredits = 0;
     let weightedSum = 0;
+
+    if (credits.length === 0) {
+        alert("Please add at least one subject first.");
+        return;
+    }
 
     credits.forEach((c, i) => {
         const creditValue = parseFloat(c.value);
@@ -77,26 +84,23 @@ function calculateCGPA() {
     // Update Dashboard Numbers
     document.getElementById("stat-credits").innerText = totalCredits.toFixed(1);
     
-    if (totalCredits === 0) {
-        document.getElementById("stat-cgpa").innerText = "0.00";
-        document.getElementById("result-box").style.display = "none";
-        return;
-    }
-
     const cgpa = (weightedSum / totalCredits).toFixed(2);
     document.getElementById("stat-cgpa").innerText = cgpa;
 
-    // Progress Bar Animation
+    // Show Result Box ONLY NOW (on button click)
     const resultBox = document.getElementById("result-box");
     const progressBar = document.getElementById("progress-bar");
+    
     resultBox.style.display = "block";
     
-    // Scale: 4.0 = 100%, 2.0 = 0% (roughly)
-    const percentage = ((cgpa - 2) / 2) * 100;
-    progressBar.style.width = Math.max(10, percentage) + "%";
+    // Animate Progress Bar
+    const percentage = ((cgpa - 2) / 2) * 100; 
+    progressBar.style.width = Math.max(10, Math.min(percentage, 100)) + "%";
     
     document.getElementById("result-text").innerHTML = `Calculated CGPA: <strong>${cgpa}</strong>`;
+    
+    // Smooth scroll to result on mobile
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// Start with 1 row on load
 window.onload = addSubject;
