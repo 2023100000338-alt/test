@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CGPA Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h2>University CGPA Calculator</h2>
+</header>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Credit</th>
+                <th>Grade (2.00 – 4.00)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="subjectTable"></tbody>
+    </table>
+
+    <button onclick="addSubject()">➕ Add Subject</button>
+    <button class="primary" onclick="calculateCGPA()">Calculate CGPA</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
