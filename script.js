@@ -14,17 +14,10 @@ function addSubject() {
     subjectCount++;
     const row = document.createElement("tr");
     
-    const courseOptions = courseSuggestions.map(course => `<option value="${course}">${course}</option>`).join('');
-
+   
     // REMOVED: onchange="calculateCGPA()" from the select tags
     row.innerHTML = `
-        <td>
-            <select class="course-name">
-                <option value="">-- Choose Course --</option>
-                ${courseOptions}
-                <option value="Custom">Other (Custom)</option>
-            </select>
-        </td>
+        
         <td>
             <select class="credit">
                 <option value="1">1</option>
