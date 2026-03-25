@@ -1,17 +1,20 @@
-/* 1. Core Variables & Reset */
+/* 1. Enhanced Variables & Reset */
 :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
+    --primary: #4f46e5;
+    --primary-light: #818cf8;
+    --primary-dark: #3730a3;
     --success: #10b981;
     --danger: #ef4444;
-    --bg-main: #f1f5f9;
+    --warning: #f59e0b;
+    --bg-main: #f8fafc;
     --bg-card: #ffffff;
-    --header-bg: #0f172a;
-    --text-main: #1e293b;
+    --text-main: #0f172a;
     --text-muted: #64748b;
     --border: #e2e8f0;
-    --radius: 12px;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
 }
 
 * {
@@ -25,229 +28,266 @@ body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background-color: var(--bg-main);
     color: var(--text-main);
-    line-height: 1.5;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* 2. Responsive Header */
+/* 2. Modern Gradient Header */
 header {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: radial-gradient(circle at top left, #1e293b, #0f172a);
     color: white;
-    padding: 3rem 1rem;
+    padding: 4rem 1.5rem;
     text-align: center;
-    box-shadow: var(--shadow);
+    clip-path: ellipse(150% 100% at 50% 0%); /* Subtle curve for flair */
+    margin-bottom: -2rem;
 }
 
 header h1 {
-    font-size: clamp(1.5rem, 5vw, 2.2rem); /* Fluid font size */
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
     font-weight: 800;
-    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.75rem;
 }
 
-header p { opacity: 0.7; font-size: 1rem; }
+header p { 
+    color: var(--primary-light);
+    font-weight: 500;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
 
-/* 3. Main Layout Containers */
+/* 3. Layout */
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 1.5rem;
 }
 
 .main-layout {
     display: grid;
-    grid-template-columns: 1fr; /* Default to 1 column for mobile */
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
 }
 
-/* Laptop/Desktop: 2 Columns */
 @media (min-width: 1024px) {
     .main-layout {
-        grid-template-columns: 1fr 320px;
+        grid-template-columns: 1fr 340px;
         align-items: start;
     }
-    .grade-legend {
+    .sticky-sidebar {
         position: sticky;
-        top: 20px;
+        top: 2rem;
     }
 }
 
-/* 4. Dashboard Stats */
+/* 4. Dashboard Stats - High Visual Impact */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* 2 columns even on small mobile */
     gap: 1rem;
     margin-bottom: 2rem;
 }
 
+@media (min-width: 640px) {
+    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+}
+
 .stat-card {
     background: var(--bg-card);
-    padding: 1.5rem;
-    border-radius: var(--radius);
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border);
-    text-align: center;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s;
 }
+
+.stat-card:active { transform: scale(0.98); } /* Feedback for mobile touch */
 
 .stat-card .label {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
 }
 
 .stat-card .value {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--primary);
 }
 
-/* 5. TABLE-TO-CARD TRANSFORMATION (The Key for all devices) */
+/* 5. The Mobile-First Table (Card View) */
 .table-wrapper {
     background: var(--bg-card);
-    border-radius: var(--radius);
-    overflow: hidden;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+table { width: 100%; border-collapse: collapse; }
 
 th {
     background: #f8fafc;
     padding: 1rem;
     text-align: left;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
 }
 
-td { padding: 1rem; border-bottom: 1px solid var(--border); }
+td { padding: 1.25rem 1rem; border-bottom: 1px solid var(--border); }
 
-/* Mobile View: Convert table to cards */
+/* Mobile Card Transformation */
 @media (max-width: 768px) {
     table, thead, tbody, th, td, tr { display: block; }
-    
-    thead tr { position: absolute; top: -9999px; left: -9999px; }
+    thead { display: none; } /* Hide headers on mobile */
     
     tr {
-        border-bottom: 8px solid var(--bg-main);
-        padding: 10px;
-    }
-    
-    td {
-        border: none;
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
         position: relative;
-        padding-left: 45% !important;
-        text-align: right !important;
-        min-height: 45px;
     }
     
-    /* Create labels for mobile data */
+    tr:last-child { border-bottom: none; }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border: none;
+        text-align: right;
+    }
+
     td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 1rem;
-        width: 40%;
-        text-align: left;
         font-weight: 700;
         color: var(--text-muted);
+        font-size: 0.85rem;
+        text-align: left;
     }
 }
 
-/* 6. Form Controls */
-select, input {
-    width: 100%;
-    padding: 0.8rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-family: inherit;
-    font-size: 1rem;
-    background: #fff;
+/* 6. Refined Controls & Inputs */
+.controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
 }
 
-select:focus { outline: 2px solid var(--primary); }
+@media (min-width: 640px) {
+    .controls { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+}
 
-/* 7. Grade Legend (Sidebar) */
+select, input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    background: #fff;
+    transition: all 0.2s;
+    appearance: none; /* Custom styling for selects */
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+/* 7. Beautiful Buttons */
+button {
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+/* 8. Grade Badges & Legend */
 .grade-legend {
     background: var(--bg-card);
     padding: 1.5rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-md);
 }
 
 .legend-item {
     display: flex;
     justify-content: space-between;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid #f8fafc;
-    font-size: 0.9rem;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px dotted var(--border);
 }
 
 .badge {
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px; /* Pill shape */
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
 }
 
-.green { background: #dcfce7; color: #166534; }
-.blue { background: #dbeafe; color: #1e40af; }
-.yellow { background: #fef9c3; color: #854d0e; }
-.red { background: #fee2e2; color: #b91c1c; }
+.green { background: #ecfdf5; color: #065f46; }
+.blue { background: #eff6ff; color: #1e40af; }
+.yellow { background: #fffbeb; color: #92400e; }
+.red { background: #fef2f2; color: #991b1b; }
 
-/* 8. Controls & Buttons */
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-button {
-    flex: 1;
-    min-width: 150px;
-    padding: 1rem;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-}
-
-.btn-primary { background: var(--primary); color: white; }
-.btn-secondary { background: white; border: 1px solid var(--border); }
-.btn-delete { background: #fef2f2; color: var(--danger); min-width: auto; padding: 0.5rem; }
-
-button:hover { transform: translateY(-2px); filter: brightness(110%); }
-
-/* 9. Result Box */
+/* 9. Progress Visualization */
 .result-container {
     background: white;
-    padding: 2rem;
-    border-radius: var(--radius);
+    padding: 2.5rem 1.5rem;
+    border-radius: var(--radius-lg);
     text-align: center;
     border: 1px solid var(--border);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-md);
 }
 
 .progress-bg {
-    background: #e2e8f0;
-    height: 12px;
-    border-radius: 10px;
+    background: #f1f5f9;
+    height: 16px;
+    border-radius: 100px;
     overflow: hidden;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
 }
 
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--primary), var(--success));
     width: 0%;
-    transition: width 1s ease-in-out;
+    transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
