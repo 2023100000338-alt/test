@@ -20,11 +20,9 @@ function addSubject() {
         
         <td>
             <select class="credit">
-                <option value="1">1</option>
-                <option value="1.5">1.5</option>
-                <option value="2" selected>2</option>
-                <option value="3" selected>3</option>
-                <option value="4">4</option>
+             <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3" selected>3</option>
             </select>
         </td>
         <td>
@@ -97,3 +95,69 @@ function calculateCGPA() {
 }
 
 window.onload = addSubject;
+
+function showCGPA() {
+    document.getElementById("cgpa-section").style.display = "block";
+    document.getElementById("gpa-section").style.display = "none";
+}
+
+function showGPA() {
+    document.getElementById("cgpa-section").style.display = "none";
+    document.getElementById("gpa-section").style.display = "block";
+}
+function addGpaRow() {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td><input type="number" class="marks" placeholder="Enter %" /></td>
+        <td class="grade">-</td>
+        <td class="point">0.00</td>
+        <td><button onclick="this.closest('tr').remove()">Remove</button></td>
+    `;
+
+    document.getElementById("gpaTable").appendChild(row);
+}
+function getGrade(mark) {
+    if (mark >= 80) return ["A+", 4.00];
+    if (mark >= 75) return ["A", 3.75];
+    if (mark >= 70) return ["A-", 3.50];
+    if (mark >= 65) return ["B+", 3.25];
+    if (mark >= 60) return ["B", 3.00];
+    if (mark >= 55) return ["B-", 2.75];
+    if (mark >= 50) return ["C+", 2.50];
+    if (mark >= 45) return ["C", 2.25];
+    if (mark >= 40) return ["D", 2.00];
+    return ["F", 0.00];
+}
+function calculateGPA() {
+    const rows = document.querySelectorAll("#gpaTable tr");
+
+    if (rows.length === 0) {
+        alert("Add subject first!");
+        return;
+    }
+
+    let total = 0;
+
+    rows.forEach(row => {
+        const marks = parseFloat(row.querySelector(".marks").value);
+
+        if (!isNaN(marks)) {
+            const [grade, point] = getGrade(marks);
+
+            row.querySelector(".grade").innerText = grade;
+            row.querySelector(".point").innerText = point.toFixed(2);
+
+            total += point;
+        }
+    });
+
+    const gpa = (total / rows.length).toFixed(2);
+
+    document.getElementById("gpa-value").innerText = gpa;
+    document.getElementById("gpa-subjects").innerText = rows.length;
+}
+window.onload = () => {
+    addSubject(); // CGPA
+    addGpaRow();  // GPA
+};

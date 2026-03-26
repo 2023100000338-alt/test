@@ -11,9 +11,13 @@
     <h1>GradePoint Pro</h1>
     <p>Official University CGPA Portal</p>
 </header>
+<div class="mode-switch">
+    <button onclick="showCGPA()" class="btn-primary">CGPA</button>
+    <button onclick="showGPA()" class="btn-secondary">GPA</button>
+</div>
 
 <div class="container main-layout">
-    <div class="calculator-section">
+   <div id="cgpa-section" class="calculator-section">
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="label">Total Credits</span>
@@ -51,6 +55,39 @@
             <p id="result-text"></p>
         </div>
     </div>
+    <div id="gpa-section" class="calculator-section" style="display:none;">
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="label">Subjects</span>
+            <span id="gpa-subjects" class="value">0</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">GPA</span>
+            <span id="gpa-value" class="value">0.00</span>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Marks (%)</th>
+                    <th>Grade</th>
+                    <th>Point</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="gpaTable"></tbody>
+        </table>
+    </div>
+
+    <div class="controls">
+        <button class="btn-secondary" onclick="addGpaRow()">+ Add Subject</button>
+        <button class="btn-primary" onclick="calculateGPA()">Calculate GPA</button>
+    </div>
+
+</div>
 
     <aside class="grade-legend">
         <h3>Grade Scale Reference</h3>
