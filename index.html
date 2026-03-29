@@ -15,6 +15,24 @@
     <button onclick="showCGPA()" class="btn-primary">CGPA</button>
     <button onclick="showGPA()" class="btn-secondary">GPA</button>
 </div>
+<div class="theme-panel container">
+    <h3>🎨 Personalize Your Portal</h3>
+    <div class="theme-controls">
+        <div class="control-group">
+            <label>Brand Color:</label>
+            <input type="color" id="primaryColorPicker" value="#f97316" onchange="updateTheme()">
+        </div>
+        <div class="control-group">
+            <label>Background:</label>
+            <select id="bgPicker" onchange="updateTheme()">
+                <option value="#fefce8">Warm Cream</option>
+                <option value="#ffffff">Pure White</option>
+                <option value="#f1f5f9">Cool Slate</option>
+                <option value="#1e293b">Midnight Dark</option>
+            </select>
+        </div>
+    </div>
+</div>
 
 <div class="container main-layout">
    <div id="cgpa-section" class="calculator-section">

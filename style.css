@@ -469,3 +469,45 @@ button {
         padding-bottom: max(2rem, env(safe-area-inset-bottom));
     }
 }
+/* Theme Panel Styling */
+.theme-panel {
+    background: var(--bg-card);
+    margin-top: -2rem;
+    position: relative;
+    z-index: 10;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.theme-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#primaryColorPicker {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Ensure text remains readable if background is dark */
+.dark-theme-text {
+    --text-main: #f8fafc;
+    --text-muted: #cbd5e1;
+    --bg-card: #334155;
+}

@@ -169,3 +169,38 @@ window.onload = () => {
     addSubject(); // CGPA
     addGpaRow();  // GPA
 };
+function updateTheme() {
+    const primaryColor = document.getElementById('primaryColorPicker').value;
+    const bgColor = document.getElementById('bgPicker').value;
+    const root = document.documentElement;
+
+    // Update Primary Brand Colors
+    root.style.setProperty('--primary', primaryColor);
+    root.style.setProperty('--gradient-primary', `linear-gradient(135deg, ${primaryColor} 0%, ${adjustColor(primaryColor, -20)} 100%)`);
+    
+    // Update Background
+    root.style.setProperty('--bg-main', bgColor);
+
+    // Dynamic Text Contrast logic
+    if (isDark(bgColor)) {
+        document.body.classList.add('dark-theme-text');
+    } else {
+        document.body.classList.remove('dark-theme-text');
+    }
+}
+
+// Helper: Makes the gradient darker than the picked color
+function adjustColor(hex, percent) {
+    var num = parseInt(hex.replace("#",""),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+    return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+}
+
+// Helper: Detects if the chosen background is dark to switch text color
+function isDark(color) {
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    const brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    return brightness < 128;
+}
