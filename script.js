@@ -169,33 +169,83 @@ window.onload = () => {
     addSubject(); // CGPA
     addGpaRow();  // GPA
 };
+
+// These match your original CSS perfectly
+const DEFAULT_PRIMARY = "#f97316"; // Original Vibrant Orange
+const DEFAULT_BG = "#fefce8";      // Original Warm Cream
+
 function updateTheme() {
-    const primaryColor = document.getElementById('primaryColorPicker').value;
-    const bgColor = document.getElementById('bgPicker').value;
+    const primaryPicker = document.getElementById('primaryColorPicker');
+    const bgPicker = document.getElementById('bgPicker');
     const root = document.documentElement;
 
-    // Update Primary Brand Colors
-    root.style.setProperty('--primary', primaryColor);
-    root.style.setProperty('--gradient-primary', `linear-gradient(135deg, ${primaryColor} 0%, ${adjustColor(primaryColor, -20)} 100%)`);
-    
-    // Update Background
-    root.style.setProperty('--bg-main', bgColor);
+    // Get values from pickers
+    const primaryColor = primaryPicker.value;
+    const bgColor = bgPicker.value;
 
-    // Dynamic Text Contrast logic
+    // 1. Apply Brand Color
+    root.style.setProperty('--primary', primaryColor);
+    
+    // 2. Apply Background Color
+    root.style.setProperty('--bg-main', bgColor);
+    
+    // 3. Create the Gradient (Light to Dark version of the picked color)
+    const darkShade = adjustColor(primaryColor, -20);
+    root.style.setProperty('--gradient-primary', `linear-gradient(135deg, ${primaryColor} 0%, ${darkShade} 100%)`);
+
+    // 4. Check for Dark Mode Contrast
     if (isDark(bgColor)) {
         document.body.classList.add('dark-theme-text');
     } else {
         document.body.classList.remove('dark-theme-text');
     }
+
+    // 5. Save choices to browser memory
+    localStorage.setItem('user_theme_primary', primaryColor);
+    localStorage.setItem('user_theme_bg', bgColor);
 }
 
-// Helper: Makes the gradient darker than the picked color
+// Function to go back to your original design
+function resetTheme() {
+    localStorage.removeItem('user_theme_primary');
+    localStorage.removeItem('user_theme_bg');
+    
+    document.getElementById('primaryColorPicker').value = DEFAULT_PRIMARY;
+    document.getElementById('bgPicker').value = DEFAULT_BG;
+    
+    updateTheme();
+}
+
+// Initializing the page
+window.onload = () => {
+    // Add the starting rows for the calculators
+    addSubject(); 
+    addGpaRow();
+
+    // Check if user has a preference saved
+    const savedPrimary = localStorage.getItem('user_theme_primary');
+    const savedBg = localStorage.getItem('user_theme_bg');
+
+    if (savedPrimary && savedBg) {
+        // If they saved a color before, load it
+        document.getElementById('primaryColorPicker').value = savedPrimary;
+        document.getElementById('bgPicker').value = savedBg;
+    } else {
+        // Otherwise, make sure the pickers show the DEFAULT colors
+        document.getElementById('primaryColorPicker').value = DEFAULT_PRIMARY;
+        document.getElementById('bgPicker').value = DEFAULT_BG;
+    }
+
+    // Apply the theme (either saved or default)
+    updateTheme();
+};
+
+// --- Keep your adjustColor and isDark functions below this ---
 function adjustColor(hex, percent) {
     var num = parseInt(hex.replace("#",""),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
     return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
 }
 
-// Helper: Detects if the chosen background is dark to switch text color
 function isDark(color) {
     const hex = color.replace('#', '');
     const r = parseInt(hex.substr(0, 2), 16);
