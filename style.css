@@ -232,9 +232,56 @@ button {
 }
 
 .btn-secondary {
-    background: white;
-    color: var(--text-main);
-    border: 1px solid var(--border);
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:hover {
+    background: #0f172a;
+    border-color: #475569;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+/* 1. Refined Remove Button */
+.btn-delete {
+    background: #fff1f2; /* Ultra-soft rose background */
+    color: #e11d48;      /* Deep professional crimson */
+    border: 1px solid #ffe4e6;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: var(--radius-md); /* Matches your 12px theme */
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: fit-content;
+}
+
+/* 2. Hover State: High Contrast */
+.btn-delete:hover {
+    background: #e11d48; /* Solid crimson */
+    color: white;
+    border-color: #e11d48;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+}
+
+/* 3. Active State: Press Effect */
+.btn-delete:active {
+    transform: scale(0.96);
+    background: #be123c; /* Darker red on click */
+}
+
+/* 4. Optional: Add a small Trash Icon via CSS (No image needed) */
+.btn-delete::before {
+    content: '✕'; /* A clean multiply symbol */
+    font-size: 1rem;
+    font-weight: 800;
 }
 
 /* 8. Grade Badges & Legend */

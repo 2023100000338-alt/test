@@ -21,6 +21,7 @@ function addSubject() {
         <td>
             <select class="credit">
              <option value="1">1</option>
+             <option value="1.5">1.5</option>
                <option value="2">2</option>
                <option value="3" selected>3</option>
             </select>
@@ -38,9 +39,12 @@ function addSubject() {
                 <option value="2.00">D (2.00)</option>
             </select>
         </td>
-        <td>
-            <button class="btn-delete" onclick="removeSubject(this)">Remove</button>
-        </td>
+       
+<td>
+    <button class="btn-delete" onclick="removeSubject(this)">
+        <span style="font-size: 1.1rem; line-height: 0;"></span> Remove
+    </button>
+</td>
     `;
     document.getElementById("subjectTable").appendChild(row);
 }
@@ -112,7 +116,11 @@ function addGpaRow() {
         <td><input type="number" class="marks" placeholder="Enter %" /></td>
         <td class="grade">-</td>
         <td class="point">0.00</td>
-        <td><button onclick="this.closest('tr').remove()">Remove</button></td>
+        <td>
+    <button class="btn-delete" onclick="removeSubject(this)">
+        <span style="font-size: 1.1rem; line-height: 0;"></span> Remove
+    </button>
+     </td>
     `;
 
     document.getElementById("gpaTable").appendChild(row);
