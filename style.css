@@ -576,3 +576,69 @@ button {
         font-size: 0.95rem;
     }
 }
+
+/* MOBILE FIX: Table to Cards & Header Scaling */
+@media (max-width: 768px) {
+    /* Fix Header Blob Size */
+    header {
+        padding: 3rem 1rem 3.5rem !important;
+        margin-bottom: -2.5rem !important;
+        border-bottom-left-radius: 40px !important; 
+        border-bottom-right-radius: 40px !important;
+    }
+
+    header h1 { font-size: 1.8rem !important; }
+
+    /* Force Table into Cards */
+    .table-wrapper {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    table, thead, tbody, th, td, tr { 
+        display: block !important; 
+        width: 100% !important;
+    }
+
+    thead tr { display: none !important; } /* Hide headers */
+    
+    tr {
+        background: var(--bg-card);
+        border-radius: var(--radius-md) !important;
+        margin-bottom: 1.25rem !important;
+        padding: 1.25rem !important;
+        border: 1px solid var(--border) !important;
+        box-shadow: var(--shadow-sm) !important;
+    }
+    
+    td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 0.8rem 0 !important;
+        border: none !important;
+        border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+        text-align: right !important;
+    }
+
+    td:last-child { border-bottom: none !important; }
+
+    /* Show labels on the left */
+    td::before {
+        content: attr(data-label);
+        font-weight: 800;
+        color: var(--text-main);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        flex: 1;
+        text-align: left;
+    }
+
+    /* Fix Input/Select Width on Mobile */
+    td select, td input {
+        max-width: 140px !important;
+        min-height: 44px !important;
+        padding: 0.5rem !important;
+    }
+}

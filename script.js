@@ -47,8 +47,9 @@ function addSubject() {
 function addGpaRow() {
     const row = document.createElement("tr");
 
+    // CRITICAL: Each <td> MUST have data-label for mobile view to show text
     row.innerHTML = `
-        <td data-label="Marks (%)"><input type="number" class="marks" placeholder="Enter %" /></td>
+        <td data-label="Marks (%)"><input type="number" class="marks" placeholder="Enter %" oninput="calculateGPA()" /></td>
         <td data-label="Grade" class="grade">-</td>
         <td data-label="Point" class="point">0.00</td>
         <td data-label="Action">
