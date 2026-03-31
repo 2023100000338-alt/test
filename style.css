@@ -511,3 +511,19 @@ button {
     --text-muted: #cbd5e1;
     --bg-card: #334155;
 }
+.seo-content {
+    margin-top: 40px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+}
+
+.seo-content h2 {
+    margin-top: 20px;
+    color: #333;
+}
+
+.seo-content p {
+    line-height: 1.6;
+    color: #555;
+}
