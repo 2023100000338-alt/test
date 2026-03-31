@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cgpa-calculator-umber-kappa.vercel.app/sitemap.xml
