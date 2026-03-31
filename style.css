@@ -505,25 +505,74 @@ button {
     cursor: pointer;
 }
 
-/* Ensure text remains readable if background is dark */
+/* 1. DARK THEME TEXT OVERRIDES */
+/* When this class is active, we ensure all text and card backgrounds adjust */
 .dark-theme-text {
     --text-main: #f8fafc;
     --text-muted: #cbd5e1;
-    --bg-card: #334155;
+    --bg-card: #1e293b; /* Darker card background for better contrast */
+    --border: rgba(255, 255, 255, 0.1);
 }
+
+.dark-theme-text .seo-content,
+.dark-theme-text .grade-legend,
+.dark-theme-text .table-wrapper {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+.dark-theme-text .seo-content h2 {
+    color: var(--primary); /* Use brand color for headings in dark mode */
+}
+
+.dark-theme-text .seo-content p {
+    color: var(--text-muted);
+}
+
+/* 2. SEO CONTENT SECTION (Responsive) */
 .seo-content {
-    margin-top: 40px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 10px;
+    margin-top: 2.5rem;
+    padding: 2rem; /* Default for Desktop */
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
 }
 
 .seo-content h2 {
-    margin-top: 20px;
-    color: #333;
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.seo-content h2:first-child {
+    margin-top: 0;
 }
 
 .seo-content p {
-    line-height: 1.6;
-    color: #555;
+    margin-top: 0.75rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* 3. MOBILE ADJUSTMENTS (Under 768px) */
+@media (max-width: 768px) {
+    .seo-content {
+        padding: 1.5rem; /* Smaller padding for mobile screens */
+        margin-top: 1.5rem;
+        text-align: left; /* Ensures readability */
+    }
+
+    .seo-content h2 {
+        font-size: 1.25rem;
+    }
+
+    .seo-content p {
+        font-size: 0.95rem;
+    }
 }
