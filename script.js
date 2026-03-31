@@ -14,19 +14,17 @@ function addSubject() {
     subjectCount++;
     const row = document.createElement("tr");
     
-   
-    // REMOVED: onchange="calculateCGPA()" from the select tags
+    // Added data-label to each <td> so CSS can find it
     row.innerHTML = `
-        
-        <td>
+        <td data-label="Credits">
             <select class="credit">
-             <option value="1">1</option>
-             <option value="1.5">1.5</option>
-               <option value="2">2</option>
-               <option value="3" selected>3</option>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
             </select>
         </td>
-        <td>
+        <td data-label="Grade">
             <select class="grade">
                 <option value="4.00">A+ (4.00)</option>
                 <option value="3.75">A (3.75)</option>
@@ -39,14 +37,26 @@ function addSubject() {
                 <option value="2.00">D (2.00)</option>
             </select>
         </td>
-       
-<td>
-    <button class="btn-delete" onclick="removeSubject(this)">
-        <span style="font-size: 1.1rem; line-height: 0;"></span> Remove
-    </button>
-</td>
+        <td data-label="Action">
+            <button class="btn-delete" onclick="removeSubject(this)">Remove</button>
+        </td>
     `;
     document.getElementById("subjectTable").appendChild(row);
+}
+
+function addGpaRow() {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td data-label="Marks (%)"><input type="number" class="marks" placeholder="Enter %" /></td>
+        <td data-label="Grade" class="grade">-</td>
+        <td data-label="Point" class="point">0.00</td>
+        <td data-label="Action">
+            <button class="btn-delete" onclick="removeSubject(this)">Remove</button>
+        </td>
+    `;
+
+    document.getElementById("gpaTable").appendChild(row);
 }
 
 function removeSubject(btn) {
@@ -109,22 +119,22 @@ function showGPA() {
     document.getElementById("cgpa-section").style.display = "none";
     document.getElementById("gpa-section").style.display = "block";
 }
-function addGpaRow() {
-    const row = document.createElement("tr");
+// function addGpaRow() {
+//     const row = document.createElement("tr");
 
-    row.innerHTML = `
-        <td><input type="number" class="marks" placeholder="Enter %" /></td>
-        <td class="grade">-</td>
-        <td class="point">0.00</td>
-        <td>
-    <button class="btn-delete" onclick="removeSubject(this)">
-        <span style="font-size: 1.1rem; line-height: 0;"></span> Remove
-    </button>
-     </td>
-    `;
+//     row.innerHTML = `
+//         <td><input type="number" class="marks" placeholder="Enter %" /></td>
+//         <td class="grade">-</td>
+//         <td class="point">0.00</td>
+//         <td>
+//     <button class="btn-delete" onclick="removeSubject(this)">
+//         <span style="font-size: 1.1rem; line-height: 0;"></span> Remove
+//     </button>
+//      </td>
+//     `;
 
-    document.getElementById("gpaTable").appendChild(row);
-}
+//     document.getElementById("gpaTable").appendChild(row);
+// }
 function getGrade(mark) {
     if (mark >= 80) return ["A+", 4.00];
     if (mark >= 75) return ["A", 3.75];
@@ -146,24 +156,41 @@ function calculateGPA() {
     }
 
     let total = 0;
+    let validSubjectCount = 0;
 
     rows.forEach(row => {
-        const marks = parseFloat(row.querySelector(".marks").value);
+        const marksInput = row.querySelector(".marks");
+        const marks = parseFloat(marksInput.value);
 
-        if (!isNaN(marks)) {
+        // 1. Logic Check: Must be a number AND between 0 and 100
+        if (!isNaN(marks) && marks >= 0 && marks <= 100) {
             const [grade, point] = getGrade(marks);
 
             row.querySelector(".grade").innerText = grade;
             row.querySelector(".point").innerText = point.toFixed(2);
+            
+            // Remove any error styling if it was there
+            marksInput.style.borderColor = ""; 
 
             total += point;
+            validSubjectCount++;
+        } else {
+            // 2. Handle Invalid Input (Optional: highlight the box red)
+            row.querySelector(".grade").innerText = "Invalid";
+            row.querySelector(".point").innerText = "0.00";
+            marksInput.style.borderColor = "var(--danger)"; 
         }
     });
 
-    const gpa = (total / rows.length).toFixed(2);
-
-    document.getElementById("gpa-value").innerText = gpa;
-    document.getElementById("gpa-subjects").innerText = rows.length;
+    // 3. Final Calculation Logic
+    if (validSubjectCount > 0) {
+        const gpa = (total / validSubjectCount).toFixed(2);
+        document.getElementById("gpa-value").innerText = gpa;
+        document.getElementById("gpa-subjects").innerText = validSubjectCount;
+    } else {
+        document.getElementById("gpa-value").innerText = "0.00";
+        document.getElementById("gpa-subjects").innerText = "0";
+    }
 }
 window.onload = () => {
     addSubject(); // CGPA
