@@ -199,9 +199,8 @@ window.onload = () => {
 };
 
 // These match your original CSS perfectly
-const DEFAULT_PRIMARY = "#f97316"; // Original Vibrant Orange
-const DEFAULT_BG = "#fefce8";      // Original Warm Cream
-
+const DEFAULT_PRIMARY = "#2563eb"; // Modern Professional Blue
+const DEFAULT_BG = "#ffffff";     // Clean Pure White
 function updateTheme() {
     const primaryPicker = document.getElementById('primaryColorPicker');
     const bgPicker = document.getElementById('bgPicker');
