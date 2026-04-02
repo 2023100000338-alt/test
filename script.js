@@ -125,6 +125,8 @@ function calculateCGPA() {
     
     // Smooth scroll to result on mobile
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    updateDashboard();
 }
 
 window.onload = addSubject;
