@@ -1,23 +1,30 @@
 let subjectCount = 0;
 
-const courseSuggestions = [
-    "Introduction to Programming",
-    "Data Structures",
-    "Discrete Mathematics",
-    "Business Communication",
-    "Microeconomics",
-    "Physics I",
-    "English Composition"
-];
+
+
+// Function to update the course count and total credits in real-time
+function updateDashboard() {
+    const rows = document.querySelectorAll("#subjectTable tr");
+    const credits = document.querySelectorAll(".credit");
+    
+    // Update Total Course Count
+    document.getElementById("stat-total-courses").innerText = rows.length;
+
+    // Update Live Total Credits (Optional but professional)
+    let totalCredits = 0;
+    credits.forEach(c => {
+        totalCredits += parseFloat(c.value);
+    });
+    document.getElementById("stat-credits").innerText = totalCredits.toFixed(1);
+}
 
 function addSubject() {
     subjectCount++;
     const row = document.createElement("tr");
     
-    // Added data-label to each <td> so CSS can find it
     row.innerHTML = `
-        <td data-label="Credits">
-            <select class="credit">
+        <td data-label="Course">${subjectCount}</td> <td data-label="Credits">
+            <select class="credit" onchange="updateDashboard()">
                 <option value="1">1</option>
                 <option value="1.5">1.5</option>
                 <option value="2">2</option>
@@ -42,8 +49,19 @@ function addSubject() {
         </td>
     `;
     document.getElementById("subjectTable").appendChild(row);
+    updateDashboard(); // Update count when adding
 }
 
+function removeSubject(btn) {
+    btn.closest('tr').remove();
+    updateDashboard(); // Update count when removing
+    
+    // Also recalculate the row numbers (1, 2, 3...)
+    const rows = document.querySelectorAll("#subjectTable tr");
+    rows.forEach((row, index) => {
+        row.cells[0].innerText = index + 1;
+    });
+}
 function addGpaRow() {
     const row = document.createElement("tr");
 
