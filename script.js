@@ -61,6 +61,7 @@ function removeSubject(btn) {
     rows.forEach((row, index) => {
         row.cells[0].innerText = index + 1;
     });
+    
 }
 function addGpaRow() {
     const row = document.createElement("tr");
@@ -78,13 +79,13 @@ function addGpaRow() {
     document.getElementById("gpaTable").appendChild(row);
 }
 
-function removeSubject(btn) {
-    btn.closest('tr').remove();
-    // Optional: If you want the top stats to hide when everything is deleted
-    if (document.querySelectorAll("tr.subject-row").length === 0) {
-        document.getElementById("result-box").style.display = "none";
-    }
-}
+// function removeSubject(btn) {
+//     btn.closest('tr').remove();
+//     // Optional: If you want the top stats to hide when everything is deleted
+//     if (document.querySelectorAll("tr.subject-row").length === 0) {
+//         document.getElementById("result-box").style.display = "none";
+//     }
+// }
 
 function calculateCGPA() {
     const credits = document.querySelectorAll(".credit");
@@ -126,7 +127,7 @@ function calculateCGPA() {
     // Smooth scroll to result on mobile
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-    updateDashboard();
+    
 }
 
 window.onload = addSubject;
