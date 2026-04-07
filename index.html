@@ -18,49 +18,49 @@
 <body>
 
 <header>
-    <h1>CGPA Calculator for University Students</h1>
-    <p>Official University CGPA Portal</p>
-    
+    <h1>🎓 CGPA Calculator for University Students</h1>
+    <p>Official University CGPA Portal | Calculate GPA & CGPA with Credits</p>
 </header>
 
-
 <div class="mode-switch">
-    <button onclick="showCGPA()" class="btn-primary">CGPA</button>
-    <button onclick="showGPA()" class="btn-secondary">GPA</button>
+    <button onclick="showCGPA()" class="btn-primary" id="cgpaModeBtn">📊 CGPA Mode</button>
+    <button onclick="showGPA()" class="btn-secondary" id="gpaModeBtn">📝 GPA Mode</button>
 </div>
+
 <div class="theme-panel container">
     <h3>🎨 Personalize Your Portal</h3>
     <div class="theme-controls">
         <div class="control-group">
             <label>Brand Color:</label>
-            <input type="color" id="primaryColorPicker" value="#f97316" onchange="updateTheme()">
+            <input type="color" id="primaryColorPicker" value="#2563eb" onchange="updateTheme()">
         </div>
         <div class="control-group">
             <label>Background:</label>
             <select id="bgPicker" onchange="updateTheme()">
-                <option value="#fefce8">Warm Cream</option>
                 <option value="#ffffff">Pure White</option>
-                <option value="#f1f5f9">Cool Slate</option>
+                <option value="#f8fafc">Cool Slate</option>
+                <option value="#fefce8">Warm Cream</option>
                 <option value="#1e293b">Midnight Dark</option>
             </select>
         </div>
-        <button class="btn-delete" style="min-height: 40px; padding: 0.5rem 1rem;" onclick="resetTheme()">Reset to Default</button>
+        <button class="btn-delete reset-btn" onclick="resetTheme()">Reset to Default</button>
     </div>
 </div>
 
 <div class="container main-layout">
-   <div id="cgpa-section" class="calculator-section">
+    <!-- CGPA SECTION -->
+    <div id="cgpa-section" class="calculator-section">
         <div class="stats-grid">
             <div class="stat-card">
-                <span class="label">Total Credits</span>
+                <span class="label">📚 Total Credits</span>
                 <span id="stat-credits" class="value">0</span>
             </div>
             <div class="stat-card">
-                 <span class="label">Total Courses</span>
-                  <span id="stat-total-courses" class="value">0</span>
-          </div>
+                <span class="label">📖 Total Courses</span>
+                <span id="stat-total-courses" class="value">0</span>
+            </div>
             <div class="stat-card">
-                <span class="label">Current CGPA</span>
+                <span class="label">🏆 Current CGPA</span>
                 <span id="stat-cgpa" class="value">0.00</span>
             </div>
         </div>
@@ -69,7 +69,6 @@
             <table>
                 <thead>
                     <tr>
-                        <!-- <th>Subject / Course</th> -->
                         <th>Course</th>
                         <th>Credits</th>
                         <th>Grade</th>
@@ -92,62 +91,42 @@
             <p id="result-text"></p>
         </div>
     </div>
+
+    <!-- GPA SECTION -->
     <div id="gpa-section" class="calculator-section" style="display:none;">
-
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="label">Subjects</span>
-            <span id="gpa-subjects" class="value">0</span>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="label">📋 Subjects</span>
+                <span id="gpa-subjects" class="value">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="label">⭐ GPA</span>
+                <span id="gpa-value" class="value">0.00</span>
+            </div>
         </div>
-        <div class="stat-card">
-            <span class="label">GPA</span>
-            <span id="gpa-value" class="value">0.00</span>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Marks (%)</th>
+                        <th>Grade</th>
+                        <th>Point</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="gpaTable"></tbody>
+            </table>
+        </div>
+
+        <div class="controls">
+            <button class="btn-secondary" onclick="addGpaRow()">+ Add Subject</button>
+            <button class="btn-primary" onclick="calculateGPA()">Calculate GPA</button>
         </div>
     </div>
-
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Marks (%)</th>
-                    <th>Grade</th>
-                    <th>Point</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="gpaTable"></tbody>
-        </table>
-    </div>
-
-    <div class="controls">
-        <button class="btn-secondary" onclick="addGpaRow()">+ Add Subject</button>
-        <button class="btn-primary" onclick="calculateGPA()">Calculate GPA</button>
-    </div>
-
-</div>
-<section class="seo-content">
-    <h2>What is CGPA?</h2>
-    <p>
-        CGPA (Cumulative Grade Point Average) is a grading system used by universities 
-        to measure a student's academic performance. It is calculated based on the grades 
-        and credits of all subjects.
-    </p>
-
-    <h2>How to Calculate CGPA?</h2>
-    <p>
-        To calculate CGPA, enter your course credits and grades in the calculator above. 
-        The system will automatically compute your overall CGPA quickly and accurately.
-    </p>
-
-    <h2>Why Use This CGPA Calculator?</h2>
-    <p>
-        This tool helps students easily calculate their GPA and CGPA without any manual errors. 
-        It is fast, simple, and designed for university students.
-    </p>
-</section>
 
     <aside class="grade-legend">
-        <h3>Grade Scale Reference</h3>
+        <h3>📊 Grade Scale Reference</h3>
         <div class="legend-item"><span>80% - 100%</span> <span class="badge green">A+ (4.00)</span></div>
         <div class="legend-item"><span>75% - 79%</span> <span class="badge blue">A (3.75)</span></div>
         <div class="legend-item"><span>70% - 74%</span> <span class="badge blue">A- (3.50)</span></div>
@@ -157,9 +136,13 @@
         <div class="legend-item"><span>50% - 54%</span> <span class="badge orange">C+ (2.50)</span></div>
         <div class="legend-item"><span>45% - 49%</span> <span class="badge red">C (2.25)</span></div>
         <div class="legend-item"><span>40% - 44%</span> <span class="badge red">D (2.00)</span></div>
+        <div class="legend-item"><span>Below 40%</span> <span class="badge danger">F (0.00)</span></div>
     </aside>
-   
 </div>
+
+<footer>
+    <p>© 2024 GradePoint Pro | Accurate CGPA & GPA Calculator for University Students</p>
+</footer>
 
 <script src="script.js"></script>
 </body>
